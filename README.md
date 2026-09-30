@@ -11,15 +11,17 @@ about its own dependencies.
 ## What is here
 
 ```text
-index.html      the page
-styles.css      its styles, dark and light from the same tokens
-og.png          the social card, 1200x630
-icon-180.png    the touch icon
-favicon.svg     the icon
-robots.txt      allows everything, names the sitemap
-sitemap.xml     one URL, because there is one page
-_headers        security headers and cache lifetimes (Cloudflare Pages)
-_redirects      www to the apex, so there is one canonical host
+public/         everything that is served
+  index.html    the page
+  styles.css    its styles, dark and light from the same tokens
+  og.png        the social card, 1200x630
+  icon-180.png  the touch icon
+  favicon.svg   the icon
+  robots.txt    allows everything, names the sitemap
+  sitemap.xml   one URL, because there is one page
+  _headers      security headers and cache lifetimes
+  _redirects    www to the apex, so there is one canonical host
+wrangler.jsonc  what Cloudflare serves, and from where
 ```
 
 ## Editing it
@@ -28,7 +30,7 @@ Open `index.html`. To see it, serve the directory rather than opening the file,
 so the absolute paths resolve:
 
 ```bash
-python3 -m http.server 8765
+python3 -m http.server 8765 --directory public
 ```
 
 Then <http://localhost:8765>.
@@ -39,5 +41,5 @@ renders a page to a PNG will do.
 
 ## Deploying
 
-Cloudflare Pages builds nothing and serves this directory as it is. A push to
-`main` is a deployment.
+Cloudflare builds nothing and serves `public/` as it is. A push to `main` is a
+deployment.

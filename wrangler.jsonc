@@ -1,0 +1,14 @@
+{
+  // Static assets, served by Cloudflare's edge. There is no Worker script:
+  // nothing here runs, which is the point — a page with no code cannot break
+  // between being written and being served.
+  "name": "knoverge-site",
+  "compatibility_date": "2026-09-30",
+  "assets": {
+    "directory": "./public",
+    // A request for a path that does not exist is a 404 rather than the home
+    // page: this is a site, not a single-page application, and pretending a
+    // wrong address is the front page is how a broken link becomes invisible.
+    "not_found_handling": "404-page"
+  }
+}
