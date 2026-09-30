@@ -20,7 +20,6 @@ public/         everything that is served
   robots.txt    allows everything, names the sitemap
   sitemap.xml   one URL, because there is one page
   _headers      security headers and cache lifetimes
-  _redirects    www to the apex, so there is one canonical host
 wrangler.jsonc  what Cloudflare serves, and from where
 ```
 
@@ -43,3 +42,8 @@ renders a page to a PNG will do.
 
 Cloudflare builds nothing and serves `public/` as it is. A push to `main` is a
 deployment.
+
+There is no `_redirects` file. Static assets accept only relative URLs in one,
+so sending `www` to the apex cannot be expressed there; it is a redirect rule in
+the Cloudflare dashboard instead. A rule is also the right place for it: it
+answers before anything is served, rather than after.
