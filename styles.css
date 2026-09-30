@@ -1,0 +1,290 @@
+/* One page, no build step, no JavaScript. Colours are tokens so the dark and
+   light variants are the same stylesheet read twice rather than two stylesheets. */
+:root {
+  --bg: #0b0d10;
+  --panel: #12161b;
+  --line: #222a33;
+  --text: #e8edf2;
+  --muted: #9aa7b4;
+  --accent: #7aa2f7;
+  --accent-ink: #0b0d10;
+  --code-bg: #0e1319;
+  --measure: 66ch;
+  --gap: clamp(2.5rem, 6vw, 5rem);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    --bg: #ffffff;
+    --panel: #f6f8fa;
+    --line: #dfe4ea;
+    --text: #12161b;
+    --muted: #5a6672;
+    --accent: #2c5bd6;
+    --accent-ink: #ffffff;
+    --code-bg: #f2f5f8;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 clamp(1rem, 0.96rem + 0.2vw, 1.0625rem) / 1.65
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+}
+.skip:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 10;
+  padding: 0.6rem 1rem;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: 6px;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 0.2em;
+}
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ---- chrome ---- */
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.wordmark {
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  font-size: 1.0625rem;
+}
+
+.bar nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  font-size: 0.9375rem;
+}
+.bar nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.bar nav a:hover {
+  color: var(--text);
+}
+
+main {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+section {
+  padding: var(--gap) 0;
+  border-bottom: 1px solid var(--line);
+}
+section:last-of-type {
+  border-bottom: 0;
+}
+
+/* ---- hero ---- */
+
+.hero {
+  padding-top: clamp(3rem, 9vw, 6.5rem);
+}
+
+h1 {
+  margin: 0 0 1.25rem;
+  max-width: 18ch;
+  /* The lower bound has to fit the longest word at the narrowest phone, or one
+     line overflows and takes the whole document's width with it. */
+  font-size: clamp(1.9rem, 1.05rem + 3.7vw, 4rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  font-weight: 640;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+.lede {
+  max-width: var(--measure);
+  margin: 0 0 2rem;
+  font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
+  color: var(--muted);
+}
+
+.status {
+  margin: 1.75rem 0 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.7rem 1.15rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 550;
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+.button:hover {
+  filter: brightness(1.08);
+}
+.button.ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--line);
+}
+.button.ghost:hover {
+  border-color: var(--muted);
+  filter: none;
+}
+
+/* ---- text ---- */
+
+h2 {
+  margin: 0 0 1.25rem;
+  overflow-wrap: break-word;
+  font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2rem);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  font-weight: 620;
+}
+
+h3 {
+  margin: 0 0 0.6rem;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+p {
+  max-width: var(--measure);
+}
+
+section > p {
+  color: var(--muted);
+}
+
+abbr {
+  text-decoration: underline dotted;
+  cursor: help;
+}
+
+/* ---- the four cards ---- */
+
+/* Two by two rather than auto-fit: four cards in a three-column track leave one
+   alone on a second row, which reads as a mistake rather than as a fourth point. */
+.grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 46rem) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.grid article {
+  padding: 1.4rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.grid p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+/* ---- code ---- */
+
+pre {
+  max-width: var(--measure);
+  margin: 1.25rem 0;
+  padding: 1.1rem 1.25rem;
+  overflow-x: auto;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.875rem;
+}
+
+pre code {
+  color: var(--text);
+  line-height: 1.7;
+}
+
+p code {
+  padding: 0.1em 0.35em;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+
+/* ---- footer ---- */
+
+footer {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 4rem;
+  border-top: 1px solid var(--line);
+}
+
+footer p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+}

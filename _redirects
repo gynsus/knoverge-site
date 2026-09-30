@@ -1,0 +1,2 @@
+# One canonical host, so a link to either spelling is a link to the same page.
+https://www.knoverge.dev/* https://knoverge.dev/:splat 301

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://knoverge.dev/sitemap.xml

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Knoverge — a knowledge ledger for humans and AI agents</title>
+    <meta
+      name="description"
+      content="Self-hosted shared knowledge for humans and AI agents. Markdown in Git you can read without the product, provenance on every change, agents that propose rather than overwrite, and an append-only audit ledger."
+    />
+    <link rel="canonical" href="https://knoverge.dev/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Knoverge" />
+    <meta property="og:url" content="https://knoverge.dev/" />
+    <meta property="og:title" content="Knoverge — a knowledge ledger for humans and AI agents" />
+    <meta
+      property="og:description"
+      content="Self-hosted shared knowledge for humans and AI agents. Markdown in Git you can read without the product, provenance on every change, and agents that propose rather than overwrite."
+    />
+    <meta property="og:image" content="https://knoverge.dev/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Knoverge — a knowledge ledger for humans and AI agents" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Knoverge — a knowledge ledger for humans and AI agents" />
+    <meta
+      name="twitter:description"
+      content="Self-hosted shared knowledge for humans and AI agents. Markdown in Git, provenance on every change, agents that propose rather than overwrite."
+    />
+    <meta name="twitter:image" content="https://knoverge.dev/og.png" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icon-180.png" />
+    <link rel="stylesheet" href="/styles.css" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Knoverge",
+        "description": "Self-hosted shared knowledge control plane for humans and AI agents, exposed over MCP and HTTP.",
+        "url": "https://knoverge.dev/",
+        "codeRepository": "https://github.com/gynsus/knoverge",
+        "programmingLanguage": "TypeScript",
+        "runtimePlatform": "Node.js",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "author": { "@type": "Person", "name": "Grigory Frolov" }
+      }
+    </script>
+  </head>
+
+  <body>
+    <a class="skip" href="#what">Skip to content</a>
+
+    <header class="bar">
+      <span class="wordmark">Knoverge</span>
+      <nav aria-label="Primary">
+        <a href="#what">What it is</a>
+        <a href="#different">Why</a>
+        <a href="#run">Run it</a>
+        <a href="https://github.com/gynsus/knoverge" rel="noopener">GitHub</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <h1>A knowledge ledger for humans and AI&nbsp;agents.</h1>
+        <p class="lede">
+          Your assistants keep forgetting what you told them, and each new one starts from
+          nothing. Knoverge is the shared, self-hosted place they read from and propose to —
+          with history, provenance and review, and nothing an agent writes becoming canonical
+          without a rule that says so.
+        </p>
+        <p class="actions">
+          <a class="button" href="https://github.com/gynsus/knoverge" rel="noopener">
+            Source on GitHub
+          </a>
+          <a class="button ghost" href="#run">Run it in one command</a>
+        </p>
+        <p class="status">
+          Apache&nbsp;2.0 · one container plus PostgreSQL · works with no AI provider configured
+        </p>
+      </section>
+
+      <section id="what">
+        <h2>What it is</h2>
+        <p>
+          A knowledge base your agents connect to over
+          <abbr title="Model Context Protocol">MCP</abbr>, and you read in a browser. It records
+          who wrote what, keeps every version, asks a person before an agent changes anything,
+          and tells a newly connected agent what the workspace already knows so it does not
+          write it all down again.
+        </p>
+        <p>
+          It is self-hosted because knowledge about your work is not something to hand to
+          somebody else's service, and it contacts nothing you have not configured.
+        </p>
+      </section>
+
+      <section id="different">
+        <h2>Four things that make it different</h2>
+
+        <div class="grid">
+          <article>
+            <h3>The knowledge outlives the product</h3>
+            <p>
+              Every item is a Markdown file with YAML frontmatter in a Git repository, filed
+              under its category, one commit per change. Clone it and read it in any editor.
+              If Knoverge disappeared tomorrow, what you wrote would still be there and still
+              make sense.
+            </p>
+          </article>
+
+          <article>
+            <h3>Agents propose, people decide</h3>
+            <p>
+              A connected agent gets read, search and propose. Writing directly takes an
+              explicit permission <em>and</em> a policy rule that allows it — and without one,
+              every agent write goes to a review queue, including agents you trust.
+            </p>
+          </article>
+
+          <article>
+            <h3>Every change is attributable</h3>
+            <p>
+              Each write records the actor, the agent identity, the client, the model when it
+              is known, the request, the sources it rested on, and the revision it was based
+              on. The audit ledger is append-only and hash-chained, so a change nobody made
+              cannot appear in it.
+            </p>
+          </article>
+
+          <article>
+            <h3>It works without an LLM</h3>
+            <p>
+              Knowledge, history, review, permissions, reconciliation, exact and full-text
+              search, MCP and HTTP all work with no AI provider configured. Embeddings,
+              summaries and image or audio understanding are additions, not requirements.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section id="run">
+        <h2>Run it</h2>
+        <p>One application container and PostgreSQL. No Redis, no Kafka, no object storage.</p>
+        <pre><code>git clone https://github.com/gynsus/knoverge.git
+cd knoverge
+cp .env.example .env    # then set the three secrets it names
+docker compose up -d</code></pre>
+        <p>
+          Then open <code>http://localhost:3000</code>, create the first administrator, and
+          point an agent at <code>/mcp</code>. ChatGPT and Claude.ai connectors sign in through
+          the built-in OAuth server; Claude Code and anything else use a token you issue.
+        </p>
+      </section>
+
+      <section id="state">
+        <h2>Where it is</h2>
+        <p>
+          Early, and honest about it. Knowledge, review, reconciliation, hybrid search,
+          provenance and temporal claims, summaries and digests, files and media, export and
+          import, and the OAuth server for hosted connectors are built and released. Knowledge
+          gardening is not. The
+          <a href="https://github.com/gynsus/knoverge/blob/main/CHANGELOG.md" rel="noopener"
+            >changelog</a
+          >
+          says what each release contains, and the
+          <a href="https://github.com/gynsus/knoverge/tree/main/docs" rel="noopener"
+            >documentation</a
+          >
+          says how it is built and why.
+        </p>
+        <p class="actions">
+          <a class="button" href="https://github.com/gynsus/knoverge/releases" rel="noopener">
+            Releases
+          </a>
+          <a
+            class="button ghost"
+            href="https://github.com/gynsus/knoverge/blob/main/docs/ARCHITECTURE.md"
+            rel="noopener"
+            >Architecture</a
+          >
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Knoverge is free software under the
+        <a href="https://github.com/gynsus/knoverge/blob/main/LICENSE" rel="noopener"
+          >Apache&nbsp;2.0 licence</a
+        >. Built by Grigory Frolov.
+      </p>
+    </footer>
+  </body>
+</html>
