@@ -274,6 +274,14 @@ p code {
   border-radius: 5px;
 }
 
+/* An aside under a block of commands: the reason one of them is there, for a
+   reader who would otherwise wonder why three volumes are made by hand. */
+.note {
+  max-width: var(--measure);
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
 /* ---- footer ---- */
 
 footer {
