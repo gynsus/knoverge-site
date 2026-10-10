@@ -46,7 +46,11 @@
         "programmingLanguage": "TypeScript",
         "runtimePlatform": "Node.js",
         "license": "https://www.apache.org/licenses/LICENSE-2.0",
-        "author": { "@type": "Person", "name": "Grigory Frolov" }
+        "author": {
+          "@type": "Person",
+          "name": "Grigory Frolov",
+          "url": "https://grigoryfrolov.com/"
+        }
       }
     </script>
   </head>
@@ -77,7 +81,7 @@
           <a class="button" href="https://github.com/gynsus/knoverge" rel="noopener">
             Source on GitHub
           </a>
-          <a class="button ghost" href="#run">Run it in one command</a>
+          <a class="button ghost" href="#run">How to run it</a>
         </p>
         <p class="status">
           Apache&nbsp;2.0 · one container plus PostgreSQL · works with no AI provider configured
@@ -148,8 +152,15 @@
         <p>One application container and PostgreSQL. No Redis, no Kafka, no object storage.</p>
         <pre><code>git clone https://github.com/gynsus/knoverge.git
 cd knoverge
-cp .env.example .env    # then set the three secrets it names
+cp .env.example .env    # set the password and three secrets
+docker volume create knoverge-postgres
+docker volume create knoverge-data
+docker volume create knoverge-backups
 docker compose up -d</code></pre>
+        <p class="note">
+          The three volumes are made by hand on purpose: declared external, they are the
+          ones <code>docker compose down -v</code> cannot take with it.
+        </p>
         <p>
           Then open <code>http://localhost:3000</code>, create the first administrator, and
           point an agent at <code>/mcp</code>. ChatGPT and Claude.ai connectors sign in through
@@ -162,8 +173,10 @@ docker compose up -d</code></pre>
         <p>
           Early, and honest about it. Knowledge, review, reconciliation, hybrid search,
           provenance and temporal claims, summaries and digests, files and media, export and
-          import, and the OAuth server for hosted connectors are built and released. Knowledge
-          gardening is not. The
+          import, and the OAuth server for hosted connectors are built and released. Backups
+          the installation takes itself — on a schedule you give it, kept for as many days as
+          you say, and sent on to one SSH machine when you name one — are on
+          <code>main</code> and not yet in a release. Knowledge gardening is neither. The
           <a href="https://github.com/gynsus/knoverge/blob/main/CHANGELOG.md" rel="noopener"
             >changelog</a
           >
@@ -192,7 +205,12 @@ docker compose up -d</code></pre>
         Knoverge is free software under the
         <a href="https://github.com/gynsus/knoverge/blob/main/LICENSE" rel="noopener"
           >Apache&nbsp;2.0 licence</a
-        >. Built by Grigory Frolov.
+        >. Designed and built by
+        <a href="https://grigoryfrolov.com/" rel="noopener me">Grigory Frolov</a>, who writes
+        about why it exists on
+        <a href="https://grigoryfrolov.com/projects/knoverge/" rel="noopener"
+          >the project page</a
+        >.
       </p>
     </footer>
   </body>
